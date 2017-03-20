@@ -21,33 +21,48 @@ angular.module('scanner.controllers', [])
 
         vm.scanResults = '';
     });
-    .controller('SurveyController', function($cordovaInAppBrowser) {
+    .controller('BrowserController', function($cordovaInAppBrowser) {
 
-      var options = {
-          location: 'yes',
-          clearcache: 'yes',
-          toolbar: 'no'
-        };
+    var options = {
+      location: 'yes',
+      clearcache: 'yes',
+      toolbar: 'no'
+    };
 
-      document.addEventListener("deviceready", function () {
-        $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
-          .then(function(event) {
+    bc.open = function(){
+        $ionicPlatform.ready(function() {
+            $cordovaInAppBrowser
+            .open('http://ngcordova.com', '_blank', options)
+            .then(function(event) {
             // success
-          })
-          .catch(function(event) {
+            })
+            .catch(function(event) {
             // error
-          });
-
+            });
 
         $cordovaInAppBrowser.close();
+        });
+    };
 
-      }, false);
+    // document.addEventListener("deviceready", function () {
+    //     $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
+    //       .then(function(event) {
+    //         // success
+    //       })
+    //       .catch(function(event) {
+    //         // error
+    //       });
 
-      $rootScope.$on('$cordovaInAppBrowser:loadstart', function(e, event){
 
-      });
+    //     $cordovaInAppBrowser.close();
 
-      $rootScope.$on('$cordovaInAppBrowser:loadstop', function(e, event){
+    // }, false);
+
+    $rootScope.$on('$cordovaInAppBrowser:loadstart', function(e, event){
+
+    });
+
+    $rootScope.$on('$cordovaInAppBrowser:loadstop', function(e, event){
         // insert CSS via code / file
         $cordovaInAppBrowser.insertCSS({
           code: 'body {background-color:blue;}'
@@ -57,14 +72,14 @@ angular.module('scanner.controllers', [])
         $cordovaInAppBrowser.executeScript({
           file: 'script.js'
         });
-      });
+    });
+    
+    $rootScope.$on('$cordovaInAppBrowser:loaderror', function(e, event){
 
-      $rootScope.$on('$cordovaInAppBrowser:loaderror', function(e, event){
-
-      });
+    });
 
       $rootScope.$on('$cordovaInAppBrowser:exit', function(e, event){
 
-      });
-
     });
+
+});

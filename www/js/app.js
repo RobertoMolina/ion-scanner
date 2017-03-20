@@ -88,7 +88,7 @@ angular.module('scanner', [
     views: {
       'tab-survey': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'HomeController as vm'
+        controller: 'BrowserController as bc'
       }
     }
   });
